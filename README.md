@@ -91,6 +91,27 @@ $ # Running the scale-ci-watcher when we don't have the SSL certs needed to veri
 $ export PYTHONHTTPSVERIFY=0; ./scale-ci-watcher.sh
 ```
 
+### Modifying/Adding new workloads to the scale-ci-pipeline
+
+Adding new workloads is managed by scale-ci-watcher and it expects the following
+- JJB template: It is the job definition in yaml ( xml is also supported, watcher takes care of converting it to yaml )
+- Pipeline-build script for the Job and a properties file: The script is responsible for building the job as a stage looking with the configutation/parameters specified in the properties file.
+
+We already have bunch of jobs integrated into the scale-ci-pipeline, so we can resuse most of the stuff and just plugin the job specific stuff. Let's take the example of nodevertical scale test, here are the instructions:
+```
+$ # step 1: copy one of the existing job template and edit it with the workload specfic stuff
+$ cp scale-ci-pipeline/jjb/dynamic/scale-ci_nodevertical.yml scale-ci-pipeline/jjb/dynamic/scale-ci_$workload.yaml
+$ # step 2: copy one of the existing pipeline-build script and edit it with the workload specfic stuff
+$ cp scale-ci-pipeline/pipeline-scripts/nodevertical.groovy scale-ci-pipeline/pipeline-scripts/$workload.groovy
+$ # step 3: copy the properties file and edit it with the workload specific stuff
+$ cp scale-ci-pipeline/properties-files/nodevertical.properties scale-ci-pipeline/properties-files/$workload.properties
+$ # step 4: add the new workload to the Jenkinsfile to load the pipeline-build script ( Applicable only in the case of a new workload, this is not needed for a existing workload )
+$ vi scale-ci-pipeline/Jenkinsfile
+$ # step 5: add the workoad to the scale-ci-pipeline ( workload option and properties file path vars, applicable only in the case of a new workload )
+$ vi scale-ci-pipeline/jjb/dynamic/scale-ci-pipeline
+```
+### NOTE: Modifying the existing workload just needs changes to the existing template, build script and properties file.
+
 ### Scale-CI Jenkins agents/slaves
 We use bunch of dedicated slaves part of OpenShift-QE Jenkins to run Scale-CI jobs. The slaves are always online instead of the on demand slaves which take time to get ready before scheduling the jobs. There are multiple slaves and executors, so we should be able to run jobs in parallel.
 
