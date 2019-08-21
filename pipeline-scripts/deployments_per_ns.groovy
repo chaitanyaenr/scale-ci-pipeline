@@ -54,7 +54,7 @@ stage ('deployments_per_ns_scale_test') {
 
 			// Run deployments_per_ns job
 			try {
-				deployments_per_ns_build = build job: 'ATS-SCALE-CI-DEPLOYMENTS-PER-NS',
+				deployments_per_ns_build = build job: 'ATS-SCALE-CI-DEPLOYMENTS-PER-NAMESPACE',
 				parameters: [   [$class: 'LabelParameterValue', name: 'node', label: node_label ],
 						[$class: 'StringParameterValue', name: 'CLUSTER_USER', value: cluster_user ],
 						[$class: 'StringParameterValue', name: 'CLUSTER_PASSWORD', value: cluster_password ],

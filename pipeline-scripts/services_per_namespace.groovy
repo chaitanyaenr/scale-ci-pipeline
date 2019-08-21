@@ -47,7 +47,7 @@ stage ('ATS-SCALE-CI-SERVICES-PER-NAMESPACE') {
 
 			// Run services_per_namespace job
 			try {
-				services_per_namespace_build = build job: 'ATS-SCALE-CI-TEST',
+				services_per_namespace_build = build job: 'ATS-SCALE-CI-SERVICES-PER-NAMESPACE',
 				parameters: [   [$class: 'LabelParameterValue', name: 'node', label: node_label ],
 						[$class: 'StringParameterValue', name: 'CLUSTER_USER', value: cluster_user ],
 						[$class: 'StringParameterValue', name: 'CLUSTER_PASSWORD', value: cluster_password ],
