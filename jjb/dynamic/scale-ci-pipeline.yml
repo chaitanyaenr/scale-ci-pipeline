@@ -12,10 +12,6 @@
     - bool:
         default: false
         description: ''
-        name: SCALE_CI_BUILD_TRACKER
-    - bool:
-        default: false
-        description: ''
         name: OPENSTACK_INSTALL
     - bool:
         default: false
@@ -105,13 +101,14 @@
         default: false
         description: ''
         name: BASELINE_SCALE_TEST
+    - bool:
+        default: false
+        description: ''
+        name: UPERF
     - string:
         default: ''
         description: ''
         name: SCALE_CI_WATCHER_PROPERTY_FILE
-    - string:
-        default: ''
-        name: SCALE_CI_BUILD_TRACKER_PROPERTY_FILE
     - string:
         default: ''
         description: ''
@@ -216,6 +213,10 @@
         default: 'scale-ci'
         description: ''
         name: NODE_LABEL
+    - string:
+        default: false
+        description: ''
+        name: UPERF_PROPERTIES_FILE
     pipeline-scm:
       lightweight-checkout: false
       scm:
@@ -265,5 +266,4 @@
           <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
           <paramsToUseForLimit />
           </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    triggers:
-    - timed: '0 10 * * 1,3,5'
+    triggers: []

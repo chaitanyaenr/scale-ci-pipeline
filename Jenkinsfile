@@ -2,7 +2,6 @@
 
 def contact = "nelluri@redhat.com"
 def watcher = SCALE_CI_WATCHER.toString().toUpperCase()
-def build_tracker = SCALE_CI_BUILD_TRACKER.toString().toUpperCase()
 def tooling = TOOLING.toString().toUpperCase()
 def run_conformance = CONFORMANCE.toString().toUpperCase()
 def openshiftv4_install_on_aws = OPENSHIFTv4_INSTALL_ON_AWS.toString().toUpperCase()
@@ -26,6 +25,7 @@ def networking = NETWORKING.toString().toUpperCase()
 def byo = BYO_SCALE_TEST.toString().toUpperCase()
 def baseline = BASELINE_SCALE_TEST.toString().toUpperCase()
 def node_label = NODE_LABEL.toString()
+def run_uperf = UPERF.toString().toUpperCase()
 
 node (node_label) {
 	// setup the repo containing the pipeline scripts
@@ -36,11 +36,6 @@ node (node_label) {
 	// creates/updates jenkins jobs using the jjb templates
 	if (watcher == "TRUE") {
 		load "pipeline-scripts/scale_ci_watcher.groovy"
-	}
-
-	// Queries UMB message to capture the OCP 4.x payloads
-	if ( build_tracker == "TRUE") {
-		load "pipeline-scripts/scale_ci_build_tracker.groovy"
 	}
 
 	// stage to install openstack
@@ -157,6 +152,11 @@ node (node_label) {
 	if (baseline == "TRUE" ) {
 		load "pipeline-scripts/baseline.groovy"
 	}
+
+        // stage to run uperf test
+        if (run_uperf == "TRUE" ) {
+                load "pipeline-scripts/uperf.groovy"
+        }
 
 	// cleanup the workspace
 	stage('cleaning workspace') {
