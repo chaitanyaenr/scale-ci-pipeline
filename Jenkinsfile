@@ -260,7 +260,7 @@ node (node_label) {
 		// stage to run http scale test
 		if (http == "TRUE") {
 			env.WORKLOAD_PROPERTIES_FILE=HTTP_TEST_PROPERTY_FILE
-			env.WORKLOAD="ATS-SCALE-CI-HTTP"
+			env.WORKLOAD="ATS-SCALE-CI-TEST"
 			load "pipeline-scripts/workload.groovy"
 		}
 
